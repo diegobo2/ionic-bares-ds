@@ -1,0 +1,7 @@
+{
+  "name": "ionic-movie-storage-josue",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

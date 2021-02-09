@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title slot="primary">
+      Bares de Pamplona
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="ion-padding">
+    <ion-list>
+      <ion-item *ngFor="let bar of bars"
+      (click)="barTapped(bar)">
+        <ion-thumbnail slot="start">
+          <img src="{{bar.image}}">
+        </ion-thumbnail>
+        <ion-label> {{bar.name}} ({{ bar.rating }})</ion-label>
+        <!--ion-label> {{bar.shortDescription}}</ion-label-->
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
+
+<ion-toolbar>
+  <img src="/assets/images/logohosteleria.png" />
+  <ion-title slot="primary">
+    Desarrollo de Interfaces
+  </ion-title>
+</ion-toolbar>
