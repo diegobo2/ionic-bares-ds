@@ -4,12 +4,18 @@ import { BarDbService } from '../core/bardb.service';
 import { Router } from '@angular/router';
 import { DetailsPage } from '../details/details.page';
 
+import { BarcrudService } from './../core/barcrud.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  bars: any
+  
+  
+  /*
   public bars: IBar[];
   barinit: IBar[] = [
     {
@@ -60,14 +66,27 @@ export class HomePage implements OnInit {
       description: "Nuevos Djs todos los Viernes y Sábados de 19:00 a 22:00",
       image: "/assets/images/img6.jpg"
     }
-  ]
-
-  constructor(private bardbService: BarDbService, private route:
+  ]**/
+  //constructor(private bardbService: BarDbService, private route:
+  constructor(private barcrudService: BarcrudService , private route:
     Router) { }
   ngOnInit(): void {
-    // If the database is empty set initial values
-    this.inicialization();
+    this.barcrudService.read_bar().subscribe(data => {
+      
+      this.bars = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          name: e.payload.doc.data()['name'],
+          rating: e.payload.doc.data()['rating'],
+          shortDescription: e.payload.doc.data()['shortDescription'],
+          description: e.payload.doc.data()['description'],
+          image: e.payload.doc.data()['image']
+        };
+      })
+      console.log(this.bars);
+    });
   }
+  
   ionViewDidEnter() {
     // Remove elements if it already has values
     if (this.bars !== undefined) {
@@ -75,19 +94,29 @@ export class HomePage implements OnInit {
     }
     this.retrieveValues();
   }
-  inicialization() {
-    if (this.bardbService.empty()) {
-      this.barinit.forEach(bar => {
-        this.bardbService.setItem(bar.id, bar);
-      });
-    }
-  }
+  
   retrieveValues() {
     // Retrieve values
+    /*
     this.bardbService.getAll().then(
       (data) => this.bars = data
-    );
+    );*/
+    this.barcrudService.read_bar().subscribe(data => {
+      
+      this.bars = data.map(e => {
+        return {
+          id: e.payload.doc.id,
+          name: e.payload.doc.data()['name'],
+          rating: e.payload.doc.data()['rating'],
+          shortDescription: e.payload.doc.data()['shortDescription'],
+          description: e.payload.doc.data()['description'],
+          image: e.payload.doc.data()['image']
+        };
+      })
+      console.log(this.bars);
+    });
   }
+
   barTapped(bar) {
     this.route.navigate(['details', bar.id]);
   }

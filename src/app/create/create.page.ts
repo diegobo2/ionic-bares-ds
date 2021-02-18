@@ -4,6 +4,7 @@ import { BarDbService } from '../core/bardb.service';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { IBar } from '../share/interfaces';
+import { BarcrudService } from '../core/barcrud.service';
 
 @Component({
   selector: 'app-create',
@@ -15,7 +16,8 @@ export class CreatePage implements OnInit {
   barForm: FormGroup;
   constructor(
     private router: Router,
-    private bardbService: BarDbService,
+    //private bardbService: BarDbService,
+    private barcrudService: BarcrudService,
     public toastController: ToastController
   ) { }
   ngOnInit() {
@@ -53,9 +55,17 @@ export class CreatePage implements OnInit {
   }
   saveBar() {
     this.bar = this.barForm.value;
-    let nextKey = this.bar.name.trim();
-    this.bar.id = nextKey;
-    this.bardbService.setItem(nextKey, this.bar);
+    /*
+    this.bar.name = this.barForm.get('name').value;
+    this.bar.rating = this.barForm.get('rating').value;
+    this.bar.description = this.barForm.get('description').value;
+    this.bar.shortDescription = this.barForm.get('shortDescription').value;
+    this.bar.image = this.barForm.get('image').value;
+    */
+    //let nextKey = this.bar.name.trim();
+    //this.bar.id = nextKey;
+    //this.bardbService.setItem(nextKey, this.bar);
+    this.barcrudService.create_bar(this.bar);
     console.warn(this.barForm.value);
   }
 }
